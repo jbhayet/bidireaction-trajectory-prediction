@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from collections import Sequence, OrderedDict
+from collections.abc import Sequence
+from collections import OrderedDict
 
 
 class RingBuffer(Sequence):
