@@ -5,6 +5,7 @@ import os
 import sys
 sys.path.append(os.path.realpath('.'))
 import numpy as np
+import random
 import torch
 from torch import nn, optim
 from torch.nn import functional as F
@@ -27,20 +28,20 @@ import pdb
 
 def build_optimizer(cfg, model):
     all_params = model.parameters()
-    # optimizer = optim.RMSprop(all_params, lr=cfg.SOLVER.LR)
     optimizer = optim.Adam(all_params, lr=cfg.SOLVER.LR)
     return optimizer
 
 def main():
     parser = argparse.ArgumentParser(description="PyTorch Object Detection Training")
     parser.add_argument('--gpu', default='0', type=str)
+    parser.add_argument('--seed', default=0, type=int)
     parser.add_argument(
         "--config_file",
         default="",
         metavar="FILE",
         help="path to config file",
         type=str,
-    )
+    )  
     parser.add_argument(
         "opts",
         help="Modify config options using the command-line",
@@ -60,6 +61,11 @@ def main():
     print('optimizer built!')
     # NOTE: add separate optimizers to train single object predictor and interaction predictor
     
+    torch.manual_seed(args.seed)
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+
+
     if cfg.USE_WANDB:
         logger = Logger("FOL",
                         cfg,

@@ -1,10 +1,8 @@
 import pdb
 import os
 import sys
-sys.path.remove('/home/brianyao/Documents/intention2021icra')
 sys.path.append(os.path.realpath('.'))
 import torch
-from torch import nn, optim
 from torch.nn import functional as F
 
 import pickle as pkl
